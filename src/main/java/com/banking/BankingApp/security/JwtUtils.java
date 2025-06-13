@@ -10,7 +10,7 @@ import java.util.Date;
 @Component
 public class JwtUtils {
 
-    private final String SECRET_KEY = "supersecretkeysupersecretkeysupersecretkey"; // should be 256-bit (32+ chars)
+    private final String SECRET_KEY = "UbNvn36CiDX9Oyrq+u/r61Q7iWrhcgyG+jRBYeW9hk0="; // should be 256-bit (32+ chars)
     private final long EXPIRATION_TIME = 1000 * 60 * 60 * 10; // 10 hours
 
     private Key getSigningKey() {
