@@ -3,9 +3,11 @@ package com.banking.BankingApp.service;
 import com.banking.BankingApp.dtos.AuthResponse;
 import com.banking.BankingApp.dtos.LoginRequest;
 import com.banking.BankingApp.dtos.RegisterRequest;
+import com.banking.BankingApp.entity.Account;
 import com.banking.BankingApp.entity.User;
 import com.banking.BankingApp.enums.Roles;
 import com.banking.BankingApp.exception.CustomException;
+import com.banking.BankingApp.repository.AccountRepository;
 import com.banking.BankingApp.repository.UserRepository;
 import com.banking.BankingApp.security.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
+
 import java.util.Random;
 @Service
 public class AuthServiceImpl implements AuthService{
@@ -26,6 +28,8 @@ public class AuthServiceImpl implements AuthService{
     AuthenticationManager authenticationManager;
     @Autowired
     JwtUtils jwtUtils;
+    @Autowired
+    AccountRepository accountRepository;
 
 
 
@@ -47,8 +51,19 @@ public class AuthServiceImpl implements AuthService{
         user.setAddress(request.getAddress());
         user.setEnabled(true);
         user.setRole(Roles.USER);
-        user.setAccountNumber(generateAccountNumber());
-        user.setAccountBalance(BigDecimal.ZERO);
+
+
+
+
+        Account account = new Account();
+        account.setAccountNumber(generateAccountNumber());
+        account.setAccountType("CHECKING");
+        account.setBalance(0.0);
+
+
+        user.setAccount(account);
+        account.setUser(user);
+
 
         userRepository.save(user);
     }
@@ -63,4 +78,5 @@ public class AuthServiceImpl implements AuthService{
         Random random = new Random();
         return 1000000000L + random.nextLong(900000000);
     }
+
 }

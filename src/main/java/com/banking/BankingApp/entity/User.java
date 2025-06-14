@@ -9,8 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -35,12 +34,6 @@ public class User implements UserDetails {
     @Size(min = 8)
     private String password;
 
-    @Column(unique = true)
-    private Long accountNumber;
-
-
-    private BigDecimal accountBalance;
-
     @CreationTimestamp
     private Date createdAt;
     @NotNull
@@ -50,10 +43,8 @@ public class User implements UserDetails {
 
     private Boolean enabled;
 
-
-
-
-
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Account account;
 
 
     @Override
