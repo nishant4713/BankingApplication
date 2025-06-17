@@ -1,9 +1,9 @@
 package com.banking.BankingApp.controller;
 
-import com.banking.BankingApp.dtos.LoginRequest;
-import com.banking.BankingApp.dtos.RegisterRequest;
+import com.banking.BankingApp.dtos.*;
 import com.banking.BankingApp.repository.UserRepository;
 import com.banking.BankingApp.service.AuthService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,5 +33,17 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request){
         return ResponseEntity.ok(userService.login(request));
+    }
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody ForgotRequest request) throws MessagingException {
+        return ResponseEntity.ok(userService.forgotpassword(request));
+    }
+    @PostMapping("/verify-otp")
+    public ResponseEntity<?> verify(@RequestBody VerfiyOtpRequest request){
+        return ResponseEntity.ok(userService.verify(request.getEmail(),request.getOtp()));
+    }
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> changePassword(@RequestBody NewPasswordRequest request){
+        return ResponseEntity.ok(userService.resetPassword(request.getEmail(),request.getPassword()));
     }
 }

@@ -1,6 +1,5 @@
 package com.banking.BankingApp.controller;
 
-import com.banking.BankingApp.entity.User;
 import com.banking.BankingApp.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
