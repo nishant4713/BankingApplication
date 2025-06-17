@@ -1,6 +1,7 @@
 package com.banking.BankingApp.service;
 
 import com.banking.BankingApp.dtos.AccountDTO;
+import com.banking.BankingApp.dtos.TransactionResponse;
 import com.banking.BankingApp.entity.Account;
 import com.banking.BankingApp.entity.Transaction;
 import com.banking.BankingApp.entity.User;
@@ -40,10 +41,20 @@ public class AccountServiceImpl implements AccountService{
     }
 
         @Override
-        public List<Transaction> getAllTransactions(String jwt) {
+        public List<TransactionResponse> getAllTransactions(String jwt) {
             User user = userDetails.getUserFromJwtToken(jwt);
 
             Account account = accountRepository.findByUser(user);
-            return transactionRepository.findByAccountOrderByTimeDesc(account);
+            List<Transaction> transactions = transactionRepository.findByAccountOrderByTimeDesc(account);
+            return
+                    transactions.stream().map(tx->new TransactionResponse(
+                     tx.getTrans_id(),
+                    tx.getType(),
+                    tx.getTime(),
+                    tx.getAccount().getAccountNumber(),
+                    tx.getCounterParty(),
+                    tx.getAmount()
+
+            )).toList();
         }
 }

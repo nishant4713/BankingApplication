@@ -52,20 +52,20 @@ public class AuthServiceImpl implements AuthService{
         user.setEnabled(true);
         user.setRole(Roles.USER);
 
-
-
-
         Account account = new Account();
         account.setAccountNumber(generateAccountNumber());
         account.setAccountType("CHECKING");
         account.setBalance(0.0);
 
-
         user.setAccount(account);
         account.setUser(user);
-
-
+        System.out.println("Saving user: " + user.getEmail());
+        System.out.println("Account number: " + user.getAccount().getAccountNumber());
+        System.out.println("Balance: " + user.getAccount().getBalance());
+        System.out.println("User ID (before save): " + user.getId()); // should be null
+        System.out.println("Account ID (before save): " + user.getAccount().getId()); // should be null
         userRepository.save(user);
+
     }
 
     @Override

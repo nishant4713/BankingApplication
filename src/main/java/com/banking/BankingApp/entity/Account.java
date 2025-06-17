@@ -3,6 +3,7 @@ package com.banking.BankingApp.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,11 +24,13 @@ public class Account {
     private double balance = 0.0;
 
 
-    @OneToOne
+    @OneToOne(mappedBy = "account")
     private User user;
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-    private List<Transaction> transactions;
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Transaction> transactions = new ArrayList<>();
+
+
 
 }
 

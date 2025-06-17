@@ -43,7 +43,8 @@ public class User implements UserDetails {
 
     private Boolean enabled;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "account_id")
     private Account account;
 
 

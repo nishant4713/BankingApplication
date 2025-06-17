@@ -4,7 +4,6 @@ import com.banking.BankingApp.enums.TransactionType;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -13,14 +12,21 @@ import java.time.LocalDateTime;
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long trans_id;
+   private  Long trans_id;
     @CreationTimestamp
-    LocalDateTime time;
+    private LocalDateTime time;
 
-    double amount;
+    private double amount;
 
     @ManyToOne
+    @JoinColumn(name = "account_id", nullable = false)
     private Account account;
+
+    private long counterParty;
+    @Column(length = 50)
     @Enumerated(EnumType.STRING)
     private TransactionType type;
+
+
+
 }
